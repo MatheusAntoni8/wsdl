@@ -1,0 +1,1421 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions name="Mapa" targetNamespace="http://localhost:8080/wsdl"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/"
+                  xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+                  xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="br.gov.dnpm.wssigareas"
+                  xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/"
+                  xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+    <wsdl:types>
+        <s:schema elementFormDefault="qualified" targetNamespace="br.gov.dnpm.wssigareas">
+            <s:element name="Versao">
+                <s:complexType/>
+            </s:element>
+            <s:element name="VersaoResponse">
+                <s:complexType>
+                    <s:sequence>
+                        <s:element minOccurs="0" maxOccurs="1" name="VersaoResult" type="s:string"/>
+                    </s:sequence>
+                </s:complexType>
+            </s:element>
+            <s:element name="AbrirConexao">
+                <s:complexType/>
+            </s:element>
+            <s:element name="AbrirConexaoResponse">
+                <s:complexType>
+                    <s:sequence>
+                        <s:element minOccurs="1" maxOccurs="1" name="AbrirConexaoResult" type="s:boolean"/>
+                    </s:sequence>
+                </s:complexType>
+            </s:element>
+            <s:element name="RetornaImagemPoligonal">
+                <s:complexType>
+                    <s:sequence>
+                        <s:element minOccurs="0" maxOccurs="1" name="pPoligonal" type="tns:Poligonal"/>
+                        <s:element minOccurs="1" maxOccurs="1" name="dataVersao" type="s:dateTime"/>
+                    </s:sequence>
+                </s:complexType>
+            </s:element>
+            <s:complexType name="Poligonal">
+                <s:sequence>
+                    <s:element minOccurs="0" maxOccurs="1" name="PontoAmarracao" type="tns:Ponto"/>
+                    <s:element minOccurs="0" maxOccurs="1" name="VetorAmarracao" type="tns:Vetor"/>
+                    <s:element minOccurs="1" maxOccurs="1" name="Area" type="s:double"/>
+                    <s:element minOccurs="1" maxOccurs="1" name="CotaMinima" type="s:double"/>
+                    <s:element minOccurs="1" maxOccurs="1" name="CotaMaxima" type="s:double"/>
+                    <s:element minOccurs="1" maxOccurs="1" name="NumeroProcesso" type="s:int"/>
+                    <s:element minOccurs="1" maxOccurs="1" name="AnoProcesso" type="s:int"/>
+                    <s:element minOccurs="1" maxOccurs="1" name="NumeroProcessoOrigem" type="s:int"/>
+                    <s:element minOccurs="1" maxOccurs="1" name="AnoProcessoOrigem" type="s:int"/>
+                    <s:element minOccurs="0" maxOccurs="1" name="Usuario" type="s:string"/>
+                    <s:element minOccurs="0" maxOccurs="1" name="DescricaoLados" type="tns:ArrayOfVetor"/>
+                    <s:element minOccurs="0" maxOccurs="1" name="DescricaoDatum" type="s:string"/>
+                    <s:element minOccurs="0" maxOccurs="1" name="DescricaoVertices" type="tns:ArrayOfPonto"/>
+                    <s:element minOccurs="1" maxOccurs="1" name="SentidoDescricao" type="s:int"/>
+                    <s:element minOccurs="0" maxOccurs="1" name="Municipios" type="tns:ArrayOfMunicipio"/>
+                    <s:element minOccurs="1" maxOccurs="1" name="AmazoniaLegal" type="s:boolean"/>
+                    <s:element minOccurs="1" maxOccurs="1" name="PaisesLimitrofes" type="s:boolean"/>
+                    <s:element minOccurs="1" maxOccurs="1" name="NomeCamada" type="tns:EnumNomeCamada"/>
+                    <s:element minOccurs="0" maxOccurs="1" name="ID" type="s:string"/>
+                </s:sequence>
+            </s:complexType>
+            <s:complexType name="Ponto">
+                <s:sequence>
+                    <s:element minOccurs="0" maxOccurs="1" name="Latitude" type="s:string"/>
+                    <s:element minOccurs="0" maxOccurs="1" name="Longitude" type="s:string"/>
+                    <s:element minOccurs="0" maxOccurs="1" name="Descricao" type="s:string"/>
+                </s:sequence>
+            </s:complexType>
+            <s:complexType name="Vetor">
+                <s:sequence>
+                    <s:element minOccurs="1" maxOccurs="1" name="Distancia" type="s:double"/>
+                    <s:element minOccurs="1" maxOccurs="1" name="Azimute" type="s:double"/>
+                    <s:element minOccurs="1" maxOccurs="1" name="ContraAzimute" type="s:double"/>
+                    <s:element minOccurs="0" maxOccurs="1" name="Angulo" type="s:string"/>
+                    <s:element minOccurs="0" maxOccurs="1" name="Rumo" type="s:string"/>
+                </s:sequence>
+            </s:complexType>
+            <s:complexType name="ArrayOfVetor">
+                <s:sequence>
+                    <s:element minOccurs="0" maxOccurs="unbounded" name="Vetor" nillable="true" type="tns:Vetor"/>
+                </s:sequence>
+            </s:complexType>
+            <s:complexType name="ArrayOfPonto">
+                <s:sequence>
+                    <s:element minOccurs="0" maxOccurs="unbounded" name="Ponto" nillable="true" type="tns:Ponto"/>
+                </s:sequence>
+            </s:complexType>
+            <s:complexType name="ArrayOfMunicipio">
+                <s:sequence>
+                    <s:element minOccurs="0" maxOccurs="unbounded" name="Municipio" nillable="true"
+                               type="tns:Municipio"/>
+                </s:sequence>
+            </s:complexType>
+            <s:complexType name="Municipio">
+                <s:sequence>
+                    <s:element minOccurs="0" maxOccurs="1" name="Nome" type="s:string"/>
+                    <s:element minOccurs="0" maxOccurs="1" name="UF" type="s:string"/>
+                    <s:element minOccurs="0" maxOccurs="1" name="NomeMunicipioUF" type="s:string"/>
+                    <s:element minOccurs="1" maxOccurs="1" name="Codigo" type="s:double"/>
+                </s:sequence>
+            </s:complexType>
+            <s:simpleType name="EnumNomeCamada">
+                <s:restriction base="s:string">
+                    <s:enumeration value="DivisaoEstadual"/>
+                    <s:enumeration value="ProcessosAtivos"/>
+                    <s:enumeration value="ProcessosAtivosErro"/>
+                    <s:enumeration value="ProcessosInativos"/>
+                    <s:enumeration value="ProcessosInativosErro"/>
+                    <s:enumeration value="Disponibilidade"/>
+                    <s:enumeration value="DisponibilidadeErro"/>
+                    <s:enumeration value="ProtecaoFonte"/>
+                    <s:enumeration value="Arrendamento"/>
+                    <s:enumeration value="Reducao"/>
+                    <s:enumeration value="Servidao"/>
+                    <s:enumeration value="Todas"/>
+                    <s:enumeration value="Mina"/>
+                    <s:enumeration value="Barragem"/>
+                    <s:enumeration value="Usina"/>
+                    <s:enumeration value="Complexo"/>
+                </s:restriction>
+            </s:simpleType>
+            <s:element name="RetornaImagemPoligonalResponse">
+                <s:complexType>
+                    <s:sequence>
+                        <s:element minOccurs="0" maxOccurs="1" name="RetornaImagemPoligonalResult"
+                                   type="tns:RespostaWSSIGAreas"/>
+                    </s:sequence>
+                </s:complexType>
+            </s:element>
+            <s:complexType name="RespostaWSSIGAreas">
+                <s:sequence>
+                    <s:element minOccurs="0" maxOccurs="1" name="ImagemMapa" type="s:string"/>
+                    <s:element minOccurs="0" maxOccurs="1" name="ImagemLegenda" type="s:string"/>
+                    <s:element minOccurs="0" maxOccurs="1" name="ImagemSetaDirecional" type="s:string"/>
+                    <s:element minOccurs="0" maxOccurs="1" name="ImagemEscala" type="s:string"/>
+                    <s:element minOccurs="0" maxOccurs="1" name="DadosPoligonais" type="tns:ArrayOfPoligonal"/>
+                    <s:element minOccurs="0" maxOccurs="1" name="VersoesHistoricas" type="tns:ArrayOfDateTime"/>
+                    <s:element minOccurs="0" maxOccurs="1" name="Camadas" type="tns:ArrayOfString"/>
+                    <s:element minOccurs="1" maxOccurs="1" name="Erro" type="s:boolean"/>
+                    <s:element minOccurs="0" maxOccurs="1" name="MensagemErro" type="s:string"/>
+                </s:sequence>
+            </s:complexType>
+            <s:complexType name="ArrayOfPoligonal">
+                <s:sequence>
+                    <s:element minOccurs="0" maxOccurs="unbounded" name="Poligonal" nillable="true"
+                               type="tns:Poligonal"/>
+                </s:sequence>
+            </s:complexType>
+            <s:complexType name="ArrayOfDateTime">
+                <s:sequence>
+                    <s:element minOccurs="0" maxOccurs="unbounded" name="dateTime" type="s:dateTime"/>
+                </s:sequence>
+            </s:complexType>
+            <s:complexType name="ArrayOfString">
+                <s:sequence>
+                    <s:element minOccurs="0" maxOccurs="unbounded" name="string" nillable="true" type="s:string"/>
+                </s:sequence>
+            </s:complexType>
+            <s:element name="RetornaCamadasPoligonal">
+                <s:complexType>
+                    <s:sequence>
+                        <s:element minOccurs="0" maxOccurs="1" name="pPoligonal" type="tns:Poligonal"/>
+                        <s:element minOccurs="1" maxOccurs="1" name="dataVersao" type="s:dateTime"/>
+                    </s:sequence>
+                </s:complexType>
+            </s:element>
+            <s:element name="RetornaCamadasPoligonalResponse">
+                <s:complexType>
+                    <s:sequence>
+                        <s:element minOccurs="0" maxOccurs="1" name="RetornaCamadasPoligonalResult"
+                                   type="tns:RespostaWSSIGAreas"/>
+                    </s:sequence>
+                </s:complexType>
+            </s:element>
+            <s:element name="RetornaDescricaoPoligonal">
+                <s:complexType>
+                    <s:sequence>
+                        <s:element minOccurs="0" maxOccurs="1" name="pPoligonal" type="tns:Poligonal"/>
+                        <s:element minOccurs="0" maxOccurs="1" name="nomeVersao" type="s:string"/>
+                    </s:sequence>
+                </s:complexType>
+            </s:element>
+            <s:element name="RetornaDescricaoPoligonalResponse">
+                <s:complexType>
+                    <s:sequence>
+                        <s:element minOccurs="0" maxOccurs="1" name="RetornaDescricaoPoligonalResult"
+                                   type="tns:RespostaWSSIGAreas"/>
+                    </s:sequence>
+                </s:complexType>
+            </s:element>
+            <s:element name="RetornaImagemPoligonais">
+                <s:complexType>
+                    <s:sequence>
+                        <s:element minOccurs="0" maxOccurs="1" name="poligonais" type="tns:ArrayOfPoligonal"/>
+                    </s:sequence>
+                </s:complexType>
+            </s:element>
+            <s:element name="RetornaImagemPoligonaisResponse">
+                <s:complexType>
+                    <s:sequence>
+                        <s:element minOccurs="0" maxOccurs="1" name="RetornaImagemPoligonaisResult"
+                                   type="tns:RespostaWSSIGAreas"/>
+                    </s:sequence>
+                </s:complexType>
+            </s:element>
+            <s:element name="RetornaAtributosPoligonal">
+                <s:complexType>
+                    <s:sequence>
+                        <s:element minOccurs="0" maxOccurs="1" name="pPoligonal" type="tns:Poligonal"/>
+                        <s:element minOccurs="0" maxOccurs="1" name="nomeVersao" type="s:string"/>
+                    </s:sequence>
+                </s:complexType>
+            </s:element>
+            <s:element name="RetornaAtributosPoligonalResponse">
+                <s:complexType>
+                    <s:sequence>
+                        <s:element minOccurs="0" maxOccurs="1" name="RetornaAtributosPoligonalResult"
+                                   type="tns:RespostaWSSIGAreas"/>
+                    </s:sequence>
+                </s:complexType>
+            </s:element>
+            <s:element name="RetornaListaEstadual">
+                <s:complexType>
+                    <s:sequence>
+                        <s:element minOccurs="0" maxOccurs="1" name="estado" type="s:string"/>
+                    </s:sequence>
+                </s:complexType>
+            </s:element>
+            <s:element name="RetornaListaEstadualResponse">
+                <s:complexType>
+                    <s:sequence>
+                        <s:element minOccurs="0" maxOccurs="1" name="RetornaListaEstadualResult"
+                                   type="tns:ArrayOfEstado"/>
+                    </s:sequence>
+                </s:complexType>
+            </s:element>
+            <s:complexType name="ArrayOfEstado">
+                <s:sequence>
+                    <s:element minOccurs="0" maxOccurs="unbounded" name="Estado" nillable="true" type="tns:Estado"/>
+                </s:sequence>
+            </s:complexType>
+            <s:complexType name="Estado">
+                <s:sequence>
+                    <s:element minOccurs="0" maxOccurs="1" name="Nome" type="s:string"/>
+                    <s:element minOccurs="0" maxOccurs="1" name="UF" type="s:string"/>
+                    <s:element minOccurs="1" maxOccurs="1" name="Codigo" type="s:double"/>
+                </s:sequence>
+            </s:complexType>
+            <s:element name="VerificaDisponibilidadeLavra">
+                <s:complexType>
+                    <s:sequence>
+                        <s:element minOccurs="0" maxOccurs="1" name="dadosPoligonal" type="tns:Poligonal"/>
+                    </s:sequence>
+                </s:complexType>
+            </s:element>
+            <s:element name="VerificaDisponibilidadeLavraResponse">
+                <s:complexType>
+                    <s:sequence>
+                        <s:element minOccurs="0" maxOccurs="1" name="VerificaDisponibilidadeLavraResult"
+                                   type="tns:RespostaWSSIGAreas"/>
+                    </s:sequence>
+                </s:complexType>
+            </s:element>
+            <s:element name="VerificaDisponibilidadePesquisa">
+                <s:complexType>
+                    <s:sequence>
+                        <s:element minOccurs="0" maxOccurs="1" name="dadosPoligonal" type="tns:Poligonal"/>
+                    </s:sequence>
+                </s:complexType>
+            </s:element>
+            <s:element name="VerificaDisponibilidadePesquisaResponse">
+                <s:complexType>
+                    <s:sequence>
+                        <s:element minOccurs="0" maxOccurs="1" name="VerificaDisponibilidadePesquisaResult"
+                                   type="tns:RespostaWSSIGAreas"/>
+                    </s:sequence>
+                </s:complexType>
+            </s:element>
+            <s:element name="VerificaCessaoParcial">
+                <s:complexType>
+                    <s:sequence>
+                        <s:element minOccurs="0" maxOccurs="1" name="dadosPoligonal" type="tns:Poligonal"/>
+                    </s:sequence>
+                </s:complexType>
+            </s:element>
+            <s:element name="VerificaCessaoParcialResponse">
+                <s:complexType>
+                    <s:sequence>
+                        <s:element minOccurs="0" maxOccurs="1" name="VerificaCessaoParcialResult"
+                                   type="tns:RespostaWSSIGAreas"/>
+                    </s:sequence>
+                </s:complexType>
+            </s:element>
+            <s:element name="VerificaArrendamentoParcial">
+                <s:complexType>
+                    <s:sequence>
+                        <s:element minOccurs="0" maxOccurs="1" name="dadosPoligonal" type="tns:Poligonal"/>
+                    </s:sequence>
+                </s:complexType>
+            </s:element>
+            <s:element name="VerificaArrendamentoParcialResponse">
+                <s:complexType>
+                    <s:sequence>
+                        <s:element minOccurs="0" maxOccurs="1" name="VerificaArrendamentoParcialResult"
+                                   type="tns:RespostaWSSIGAreas"/>
+                    </s:sequence>
+                </s:complexType>
+            </s:element>
+            <s:element name="VerificaReducao">
+                <s:complexType>
+                    <s:sequence>
+                        <s:element minOccurs="0" maxOccurs="1" name="dadosPoligonal" type="tns:Poligonal"/>
+                    </s:sequence>
+                </s:complexType>
+            </s:element>
+            <s:element name="VerificaReducaoResponse">
+                <s:complexType>
+                    <s:sequence>
+                        <s:element minOccurs="0" maxOccurs="1" name="VerificaReducaoResult"
+                                   type="tns:RespostaWSSIGAreas"/>
+                    </s:sequence>
+                </s:complexType>
+            </s:element>
+            <s:element name="VerificaEnglobamento">
+                <s:complexType>
+                    <s:sequence>
+                        <s:element minOccurs="0" maxOccurs="1" name="poligonais" type="tns:ArrayOfPoligonal"/>
+                    </s:sequence>
+                </s:complexType>
+            </s:element>
+            <s:element name="VerificaEnglobamentoResponse">
+                <s:complexType>
+                    <s:sequence>
+                        <s:element minOccurs="0" maxOccurs="1" name="VerificaEnglobamentoResult"
+                                   type="tns:RespostaWSSIGAreas"/>
+                    </s:sequence>
+                </s:complexType>
+            </s:element>
+            <s:element name="ValidaPoligonal">
+                <s:complexType>
+                    <s:sequence>
+                        <s:element minOccurs="0" maxOccurs="1" name="dadosPoligonal" type="tns:Poligonal"/>
+                    </s:sequence>
+                </s:complexType>
+            </s:element>
+            <s:element name="ValidaPoligonalResponse">
+                <s:complexType>
+                    <s:sequence>
+                        <s:element minOccurs="0" maxOccurs="1" name="ValidaPoligonalResult"
+                                   type="tns:RespostaWSSIGAreas"/>
+                    </s:sequence>
+                </s:complexType>
+            </s:element>
+            <s:element name="InserePoligonal">
+                <s:complexType>
+                    <s:sequence>
+                        <s:element minOccurs="0" maxOccurs="1" name="dadosPoligonal" type="tns:Poligonal"/>
+                        <s:element minOccurs="1" maxOccurs="1" name="tipoRequerimento" type="s:int"/>
+                    </s:sequence>
+                </s:complexType>
+            </s:element>
+            <s:element name="InserePoligonalResponse">
+                <s:complexType>
+                    <s:sequence>
+                        <s:element minOccurs="0" maxOccurs="1" name="InserePoligonalResult"
+                                   type="tns:RespostaWSSIGAreas"/>
+                    </s:sequence>
+                </s:complexType>
+            </s:element>
+            <s:element name="CorrigePoligonal">
+                <s:complexType>
+                    <s:sequence>
+                        <s:element minOccurs="0" maxOccurs="1" name="dadosPoligonal" type="tns:Poligonal"/>
+                        <s:element minOccurs="1" maxOccurs="1" name="nomeCamadaOrigem" type="tns:EnumNomeCamada"/>
+                    </s:sequence>
+                </s:complexType>
+            </s:element>
+            <s:element name="CorrigePoligonalResponse">
+                <s:complexType>
+                    <s:sequence>
+                        <s:element minOccurs="0" maxOccurs="1" name="CorrigePoligonalResult"
+                                   type="tns:RespostaWSSIGAreas"/>
+                    </s:sequence>
+                </s:complexType>
+            </s:element>
+            <s:element name="AtivaPoligonalInativada">
+                <s:complexType>
+                    <s:sequence>
+                        <s:element minOccurs="0" maxOccurs="1" name="dadosPoligonal" type="tns:Poligonal"/>
+                    </s:sequence>
+                </s:complexType>
+            </s:element>
+            <s:element name="AtivaPoligonalInativadaResponse">
+                <s:complexType>
+                    <s:sequence>
+                        <s:element minOccurs="0" maxOccurs="1" name="AtivaPoligonalInativadaResult"
+                                   type="tns:RespostaWSSIGAreas"/>
+                    </s:sequence>
+                </s:complexType>
+            </s:element>
+            <s:element name="AtivaPoligonalDisponivel">
+                <s:complexType>
+                    <s:sequence>
+                        <s:element minOccurs="0" maxOccurs="1" name="dadosPoligonal" type="tns:Poligonal"/>
+                    </s:sequence>
+                </s:complexType>
+            </s:element>
+            <s:element name="AtivaPoligonalDisponivelResponse">
+                <s:complexType>
+                    <s:sequence>
+                        <s:element minOccurs="0" maxOccurs="1" name="AtivaPoligonalDisponivelResult"
+                                   type="tns:RespostaWSSIGAreas"/>
+                    </s:sequence>
+                </s:complexType>
+            </s:element>
+            <s:element name="InativaPoligonal">
+                <s:complexType>
+                    <s:sequence>
+                        <s:element minOccurs="0" maxOccurs="1" name="dadosPoligonal" type="tns:Poligonal"/>
+                    </s:sequence>
+                </s:complexType>
+            </s:element>
+            <s:element name="InativaPoligonalResponse">
+                <s:complexType>
+                    <s:sequence>
+                        <s:element minOccurs="0" maxOccurs="1" name="InativaPoligonalResult"
+                                   type="tns:RespostaWSSIGAreas"/>
+                    </s:sequence>
+                </s:complexType>
+            </s:element>
+            <s:element name="ColocaPoligonalDisponibilidade">
+                <s:complexType>
+                    <s:sequence>
+                        <s:element minOccurs="0" maxOccurs="1" name="dadosPoligonal" type="tns:Poligonal"/>
+                    </s:sequence>
+                </s:complexType>
+            </s:element>
+            <s:element name="ColocaPoligonalDisponibilidadeResponse">
+                <s:complexType>
+                    <s:sequence>
+                        <s:element minOccurs="0" maxOccurs="1" name="ColocaPoligonalDisponibilidadeResult"
+                                   type="tns:RespostaWSSIGAreas"/>
+                    </s:sequence>
+                </s:complexType>
+            </s:element>
+            <s:element name="TornaAreaLivre">
+                <s:complexType>
+                    <s:sequence>
+                        <s:element minOccurs="0" maxOccurs="1" name="dadosPoligonal" type="tns:Poligonal"/>
+                    </s:sequence>
+                </s:complexType>
+            </s:element>
+            <s:element name="TornaAreaLivreResponse">
+                <s:complexType>
+                    <s:sequence>
+                        <s:element minOccurs="0" maxOccurs="1" name="TornaAreaLivreResult"
+                                   type="tns:RespostaWSSIGAreas"/>
+                    </s:sequence>
+                </s:complexType>
+            </s:element>
+            <s:element name="ApagarVersao">
+                <s:complexType>
+                    <s:sequence>
+                        <s:element minOccurs="0" maxOccurs="1" name="dadosPoligonal" type="tns:Poligonal"/>
+                    </s:sequence>
+                </s:complexType>
+            </s:element>
+            <s:element name="ApagarVersaoResponse">
+                <s:complexType>
+                    <s:sequence>
+                        <s:element minOccurs="0" maxOccurs="1" name="ApagarVersaoResult" type="tns:RespostaWSSIGAreas"/>
+                    </s:sequence>
+                </s:complexType>
+            </s:element>
+            <s:element name="PostarVersao">
+                <s:complexType>
+                    <s:sequence>
+                        <s:element minOccurs="0" maxOccurs="1" name="dadosPoligonal" type="tns:Poligonal"/>
+                    </s:sequence>
+                </s:complexType>
+            </s:element>
+            <s:element name="PostarVersaoResponse">
+                <s:complexType>
+                    <s:sequence>
+                        <s:element minOccurs="0" maxOccurs="1" name="PostarVersaoResult" type="tns:RespostaWSSIGAreas"/>
+                    </s:sequence>
+                </s:complexType>
+            </s:element>
+            <s:element name="ValidaVerticeBrasil">
+                <s:complexType>
+                    <s:sequence>
+                        <s:element minOccurs="0" maxOccurs="1" name="longitude" type="s:string"/>
+                        <s:element minOccurs="0" maxOccurs="1" name="latitude" type="s:string"/>
+                    </s:sequence>
+                </s:complexType>
+            </s:element>
+            <s:element name="ValidaVerticeBrasilResponse">
+                <s:complexType>
+                    <s:sequence>
+                        <s:element minOccurs="1" maxOccurs="1" name="ValidaVerticeBrasilResult" type="s:boolean"/>
+                    </s:sequence>
+                </s:complexType>
+            </s:element>
+            <s:element name="RetornaAreaProcesso">
+                <s:complexType>
+                    <s:sequence>
+                        <s:element minOccurs="1" maxOccurs="1" name="numeroProcesso" type="s:int"/>
+                        <s:element minOccurs="1" maxOccurs="1" name="anoProcesso" type="s:int"/>
+                    </s:sequence>
+                </s:complexType>
+            </s:element>
+            <s:element name="RetornaAreaProcessoResponse">
+                <s:complexType>
+                    <s:sequence>
+                        <s:element minOccurs="1" maxOccurs="1" name="RetornaAreaProcessoResult" type="s:double"/>
+                    </s:sequence>
+                </s:complexType>
+            </s:element>
+            <s:element name="RetornaAreaProcessoPorCamada">
+                <s:complexType>
+                    <s:sequence>
+                        <s:element minOccurs="1" maxOccurs="1" name="numeroProcesso" type="s:int"/>
+                        <s:element minOccurs="1" maxOccurs="1" name="anoProcesso" type="s:int"/>
+                    </s:sequence>
+                </s:complexType>
+            </s:element>
+            <s:element name="RetornaAreaProcessoPorCamadaResponse">
+                <s:complexType>
+                    <s:sequence>
+                        <s:element minOccurs="1" maxOccurs="1" name="RetornaAreaProcessoPorCamadaResult"
+                                   type="s:double"/>
+                    </s:sequence>
+                </s:complexType>
+            </s:element>
+            <s:element name="SalvarCoordenadas">
+                <s:complexType>
+                    <s:sequence>
+                        <s:element minOccurs="0" maxOccurs="1" name="longitude" type="s:string"/>
+                        <s:element minOccurs="0" maxOccurs="1" name="latitude" type="s:string"/>
+                        <s:element minOccurs="1" maxOccurs="1" name="idEmpreendimento" type="s:int"/>
+                        <s:element minOccurs="1" maxOccurs="1" name="idRAL" nillable="true" type="s:int"/>
+                        <s:element minOccurs="1" maxOccurs="1" name="camada" type="tns:EnumNomeCamada"/>
+                    </s:sequence>
+                </s:complexType>
+            </s:element>
+            <s:element name="SalvarCoordenadasResponse">
+                <s:complexType>
+                    <s:sequence>
+                        <s:element minOccurs="0" maxOccurs="1" name="SalvarCoordenadasResult"
+                                   type="tns:RespostaWSSIGAreas"/>
+                    </s:sequence>
+                </s:complexType>
+            </s:element>
+            <s:element name="SalvarEmpreendimento">
+                <s:complexType>
+                    <s:sequence>
+                        <s:element minOccurs="0" maxOccurs="1" name="longitude" type="s:double"/>
+                        <s:element minOccurs="0" maxOccurs="1" name="latitude" type="s:double"/>
+                        <s:element minOccurs="1" maxOccurs="1" name="idEmpreendimento" type="s:int"/>
+                        <s:element minOccurs="0" maxOccurs="1" name="nmEmpreendimento" nillable="true" type="s:string"/>
+                        <s:element minOccurs="0" maxOccurs="1" name="nmMinerador" nillable="true" type="s:string"/>
+                        <s:element minOccurs="0" maxOccurs="1" name="nrCpfCnpj" nillable="true" type="s:string"/>
+                        <s:element minOccurs="0" maxOccurs="1" name="sgEstado" nillable="true" type="s:string"/>
+                        <s:element minOccurs="0" maxOccurs="1" name="nmMunicipio" nillable="true" type="s:string"/>
+                        <s:element minOccurs="0" maxOccurs="1" name="nmMinerio" nillable="true" type="s:string"/>
+                        <s:element minOccurs="0" maxOccurs="1" name="dsCategoriaRisco" nillable="true" type="s:string"/>
+                        <s:element minOccurs="0" maxOccurs="1" name="dsDanoPotencialAssociado" nillable="true" type="s:string"/>
+                        <s:element minOccurs="0" maxOccurs="1" name="dsClasse" nillable="true" type="s:string"/>
+                        <s:element minOccurs="0" maxOccurs="1" name="btBarragemInseridaPolitica" nillable="true" type="s:int"/>
+                        <s:element minOccurs="0" maxOccurs="1" name="nrAlturaMaximaAtual" nillable="true" type="s:double"/>
+                        <s:element minOccurs="0" maxOccurs="1" name="nrVolumeAtualReservatorio" nillable="true" type="s:double"/>
+                        <s:element minOccurs="0" maxOccurs="1" name="dsSituacaoOperacional" nillable="true" type="s:string"/>
+                        <s:element minOccurs="0" maxOccurs="1" name="dsPlanoAcaoEmergencial" nillable="true" type="s:string"/>
+                        <s:element minOccurs="0" maxOccurs="1" name="idNivelEmergencial" nillable="true" type="s:int"/>
+                        <s:element minOccurs="0" maxOccurs="1" name="dsMotivoNivelEmergencial" nillable="true" type="s:string"/>
+                        <s:element minOccurs="0" maxOccurs="1" name="dsMetodoConstrutivo" nillable="true" type="s:string"/>
+                        <s:element minOccurs="1" maxOccurs="1" name="btAtivo" type="s:int"/>
+                        <s:element minOccurs="1" maxOccurs="1" name="btAlerta"  type="s:int"/>
+                        <s:element minOccurs="1" maxOccurs="1" name="nmCamada" type="tns:EnumNomeCamada"/>
+                    </s:sequence>
+                </s:complexType>
+            </s:element>
+            <s:element name="SalvarEmpreendimentoResponse">
+                <s:complexType>
+                    <s:sequence>
+                        <s:element minOccurs="0" maxOccurs="1" name="SalvarEmpreendimentoResult" type="tns:RespostaWSSIGAreas"/>
+                    </s:sequence>
+                </s:complexType>
+            </s:element>
+        </s:schema>
+    </wsdl:types>
+    <wsdl:message name="VersaoSoapIn">
+        <wsdl:part name="parameters" element="tns:Versao"/>
+    </wsdl:message>
+    <wsdl:message name="VersaoSoapOut">
+        <wsdl:part name="parameters" element="tns:VersaoResponse"/>
+    </wsdl:message>
+    <wsdl:message name="AbrirConexaoSoapIn">
+        <wsdl:part name="parameters" element="tns:AbrirConexao"/>
+    </wsdl:message>
+    <wsdl:message name="AbrirConexaoSoapOut">
+        <wsdl:part name="parameters" element="tns:AbrirConexaoResponse"/>
+    </wsdl:message>
+    <wsdl:message name="RetornaImagemPoligonalSoapIn">
+        <wsdl:part name="parameters" element="tns:RetornaImagemPoligonal"/>
+    </wsdl:message>
+    <wsdl:message name="RetornaImagemPoligonalSoapOut">
+        <wsdl:part name="parameters" element="tns:RetornaImagemPoligonalResponse"/>
+    </wsdl:message>
+    <wsdl:message name="RetornaCamadasPoligonalSoapIn">
+        <wsdl:part name="parameters" element="tns:RetornaCamadasPoligonal"/>
+    </wsdl:message>
+    <wsdl:message name="RetornaCamadasPoligonalSoapOut">
+        <wsdl:part name="parameters" element="tns:RetornaCamadasPoligonalResponse"/>
+    </wsdl:message>
+    <wsdl:message name="RetornaDescricaoPoligonalSoapIn">
+        <wsdl:part name="parameters" element="tns:RetornaDescricaoPoligonal"/>
+    </wsdl:message>
+    <wsdl:message name="RetornaDescricaoPoligonalSoapOut">
+        <wsdl:part name="parameters" element="tns:RetornaDescricaoPoligonalResponse"/>
+    </wsdl:message>
+    <wsdl:message name="RetornaImagemPoligonaisSoapIn">
+        <wsdl:part name="parameters" element="tns:RetornaImagemPoligonais"/>
+    </wsdl:message>
+    <wsdl:message name="RetornaImagemPoligonaisSoapOut">
+        <wsdl:part name="parameters" element="tns:RetornaImagemPoligonaisResponse"/>
+    </wsdl:message>
+    <wsdl:message name="RetornaAtributosPoligonalSoapIn">
+        <wsdl:part name="parameters" element="tns:RetornaAtributosPoligonal"/>
+    </wsdl:message>
+    <wsdl:message name="RetornaAtributosPoligonalSoapOut">
+        <wsdl:part name="parameters" element="tns:RetornaAtributosPoligonalResponse"/>
+    </wsdl:message>
+    <wsdl:message name="RetornaListaEstadualSoapIn">
+        <wsdl:part name="parameters" element="tns:RetornaListaEstadual"/>
+    </wsdl:message>
+    <wsdl:message name="RetornaListaEstadualSoapOut">
+        <wsdl:part name="parameters" element="tns:RetornaListaEstadualResponse"/>
+    </wsdl:message>
+    <wsdl:message name="VerificaDisponibilidadeLavraSoapIn">
+        <wsdl:part name="parameters" element="tns:VerificaDisponibilidadeLavra"/>
+    </wsdl:message>
+    <wsdl:message name="VerificaDisponibilidadeLavraSoapOut">
+        <wsdl:part name="parameters" element="tns:VerificaDisponibilidadeLavraResponse"/>
+    </wsdl:message>
+    <wsdl:message name="VerificaDisponibilidadePesquisaSoapIn">
+        <wsdl:part name="parameters" element="tns:VerificaDisponibilidadePesquisa"/>
+    </wsdl:message>
+    <wsdl:message name="VerificaDisponibilidadePesquisaSoapOut">
+        <wsdl:part name="parameters" element="tns:VerificaDisponibilidadePesquisaResponse"/>
+    </wsdl:message>
+    <wsdl:message name="VerificaCessaoParcialSoapIn">
+        <wsdl:part name="parameters" element="tns:VerificaCessaoParcial"/>
+    </wsdl:message>
+    <wsdl:message name="VerificaCessaoParcialSoapOut">
+        <wsdl:part name="parameters" element="tns:VerificaCessaoParcialResponse"/>
+    </wsdl:message>
+    <wsdl:message name="VerificaArrendamentoParcialSoapIn">
+        <wsdl:part name="parameters" element="tns:VerificaArrendamentoParcial"/>
+    </wsdl:message>
+    <wsdl:message name="VerificaArrendamentoParcialSoapOut">
+        <wsdl:part name="parameters" element="tns:VerificaArrendamentoParcialResponse"/>
+    </wsdl:message>
+    <wsdl:message name="VerificaReducaoSoapIn">
+        <wsdl:part name="parameters" element="tns:VerificaReducao"/>
+    </wsdl:message>
+    <wsdl:message name="VerificaReducaoSoapOut">
+        <wsdl:part name="parameters" element="tns:VerificaReducaoResponse"/>
+    </wsdl:message>
+    <wsdl:message name="VerificaEnglobamentoSoapIn">
+        <wsdl:part name="parameters" element="tns:VerificaEnglobamento"/>
+    </wsdl:message>
+    <wsdl:message name="VerificaEnglobamentoSoapOut">
+        <wsdl:part name="parameters" element="tns:VerificaEnglobamentoResponse"/>
+    </wsdl:message>
+    <wsdl:message name="ValidaPoligonalSoapIn">
+        <wsdl:part name="parameters" element="tns:ValidaPoligonal"/>
+    </wsdl:message>
+    <wsdl:message name="ValidaPoligonalSoapOut">
+        <wsdl:part name="parameters" element="tns:ValidaPoligonalResponse"/>
+    </wsdl:message>
+    <wsdl:message name="InserePoligonalSoapIn">
+        <wsdl:part name="parameters" element="tns:InserePoligonal"/>
+    </wsdl:message>
+    <wsdl:message name="InserePoligonalSoapOut">
+        <wsdl:part name="parameters" element="tns:InserePoligonalResponse"/>
+    </wsdl:message>
+    <wsdl:message name="CorrigePoligonalSoapIn">
+        <wsdl:part name="parameters" element="tns:CorrigePoligonal"/>
+    </wsdl:message>
+    <wsdl:message name="CorrigePoligonalSoapOut">
+        <wsdl:part name="parameters" element="tns:CorrigePoligonalResponse"/>
+    </wsdl:message>
+    <wsdl:message name="AtivaPoligonalInativadaSoapIn">
+        <wsdl:part name="parameters" element="tns:AtivaPoligonalInativada"/>
+    </wsdl:message>
+    <wsdl:message name="AtivaPoligonalInativadaSoapOut">
+        <wsdl:part name="parameters" element="tns:AtivaPoligonalInativadaResponse"/>
+    </wsdl:message>
+    <wsdl:message name="AtivaPoligonalDisponivelSoapIn">
+        <wsdl:part name="parameters" element="tns:AtivaPoligonalDisponivel"/>
+    </wsdl:message>
+    <wsdl:message name="AtivaPoligonalDisponivelSoapOut">
+        <wsdl:part name="parameters" element="tns:AtivaPoligonalDisponivelResponse"/>
+    </wsdl:message>
+    <wsdl:message name="InativaPoligonalSoapIn">
+        <wsdl:part name="parameters" element="tns:InativaPoligonal"/>
+    </wsdl:message>
+    <wsdl:message name="InativaPoligonalSoapOut">
+        <wsdl:part name="parameters" element="tns:InativaPoligonalResponse"/>
+    </wsdl:message>
+    <wsdl:message name="ColocaPoligonalDisponibilidadeSoapIn">
+        <wsdl:part name="parameters" element="tns:ColocaPoligonalDisponibilidade"/>
+    </wsdl:message>
+    <wsdl:message name="ColocaPoligonalDisponibilidadeSoapOut">
+        <wsdl:part name="parameters" element="tns:ColocaPoligonalDisponibilidadeResponse"/>
+    </wsdl:message>
+    <wsdl:message name="TornaAreaLivreSoapIn">
+        <wsdl:part name="parameters" element="tns:TornaAreaLivre"/>
+    </wsdl:message>
+    <wsdl:message name="TornaAreaLivreSoapOut">
+        <wsdl:part name="parameters" element="tns:TornaAreaLivreResponse"/>
+    </wsdl:message>
+    <wsdl:message name="ApagarVersaoSoapIn">
+        <wsdl:part name="parameters" element="tns:ApagarVersao"/>
+    </wsdl:message>
+    <wsdl:message name="ApagarVersaoSoapOut">
+        <wsdl:part name="parameters" element="tns:ApagarVersaoResponse"/>
+    </wsdl:message>
+    <wsdl:message name="PostarVersaoSoapIn">
+        <wsdl:part name="parameters" element="tns:PostarVersao"/>
+    </wsdl:message>
+    <wsdl:message name="PostarVersaoSoapOut">
+        <wsdl:part name="parameters" element="tns:PostarVersaoResponse"/>
+    </wsdl:message>
+    <wsdl:message name="ValidaVerticeBrasilSoapIn">
+        <wsdl:part name="parameters" element="tns:ValidaVerticeBrasil"/>
+    </wsdl:message>
+    <wsdl:message name="ValidaVerticeBrasilSoapOut">
+        <wsdl:part name="parameters" element="tns:ValidaVerticeBrasilResponse"/>
+    </wsdl:message>
+    <wsdl:message name="RetornaAreaProcessoSoapIn">
+        <wsdl:part name="parameters" element="tns:RetornaAreaProcesso"/>
+    </wsdl:message>
+    <wsdl:message name="RetornaAreaProcessoSoapOut">
+        <wsdl:part name="parameters" element="tns:RetornaAreaProcessoResponse"/>
+    </wsdl:message>
+    <wsdl:message name="RetornaAreaProcessoPorCamadaSoapIn">
+        <wsdl:part name="parameters" element="tns:RetornaAreaProcessoPorCamada"/>
+    </wsdl:message>
+    <wsdl:message name="RetornaAreaProcessoPorCamadaSoapOut">
+        <wsdl:part name="parameters" element="tns:RetornaAreaProcessoPorCamadaResponse"/>
+    </wsdl:message>
+    <wsdl:message name="SalvarCoordenadasSoapIn">
+        <wsdl:part name="parameters" element="tns:SalvarCoordenadas"/>
+    </wsdl:message>
+    <wsdl:message name="SalvarCoordenadasSoapOut">
+        <wsdl:part name="parameters" element="tns:SalvarCoordenadasResponse"/>
+    </wsdl:message>
+    <wsdl:message name="SalvarEmpreendimentoSoapIn">
+        <wsdl:part name="parameters" element="tns:SalvarEmpreendimento"/>
+    </wsdl:message>
+    <wsdl:message name="SalvarEmpreendimentoSoapOut">
+        <wsdl:part name="parameters" element="tns:SalvarEmpreendimentoResponse"/>
+    </wsdl:message>
+    <wsdl:portType name="MapaSoap">
+        <wsdl:operation name="Versao">
+            <wsdl:input message="tns:VersaoSoapIn"/>
+            <wsdl:output message="tns:VersaoSoapOut"/>
+        </wsdl:operation>
+        <wsdl:operation name="AbrirConexao">
+            <wsdl:input message="tns:AbrirConexaoSoapIn"/>
+            <wsdl:output message="tns:AbrirConexaoSoapOut"/>
+        </wsdl:operation>
+        <wsdl:operation name="RetornaImagemPoligonal">
+            <wsdl:input message="tns:RetornaImagemPoligonalSoapIn"/>
+            <wsdl:output message="tns:RetornaImagemPoligonalSoapOut"/>
+        </wsdl:operation>
+        <wsdl:operation name="RetornaCamadasPoligonal">
+            <wsdl:input message="tns:RetornaCamadasPoligonalSoapIn"/>
+            <wsdl:output message="tns:RetornaCamadasPoligonalSoapOut"/>
+        </wsdl:operation>
+        <wsdl:operation name="RetornaDescricaoPoligonal">
+            <wsdl:input message="tns:RetornaDescricaoPoligonalSoapIn"/>
+            <wsdl:output message="tns:RetornaDescricaoPoligonalSoapOut"/>
+        </wsdl:operation>
+        <wsdl:operation name="RetornaImagemPoligonais">
+            <wsdl:input message="tns:RetornaImagemPoligonaisSoapIn"/>
+            <wsdl:output message="tns:RetornaImagemPoligonaisSoapOut"/>
+        </wsdl:operation>
+        <wsdl:operation name="RetornaAtributosPoligonal">
+            <wsdl:input message="tns:RetornaAtributosPoligonalSoapIn"/>
+            <wsdl:output message="tns:RetornaAtributosPoligonalSoapOut"/>
+        </wsdl:operation>
+        <wsdl:operation name="RetornaListaEstadual">
+            <wsdl:input message="tns:RetornaListaEstadualSoapIn"/>
+            <wsdl:output message="tns:RetornaListaEstadualSoapOut"/>
+        </wsdl:operation>
+        <wsdl:operation name="VerificaDisponibilidadeLavra">
+            <wsdl:input message="tns:VerificaDisponibilidadeLavraSoapIn"/>
+            <wsdl:output message="tns:VerificaDisponibilidadeLavraSoapOut"/>
+        </wsdl:operation>
+        <wsdl:operation name="VerificaDisponibilidadePesquisa">
+            <wsdl:input message="tns:VerificaDisponibilidadePesquisaSoapIn"/>
+            <wsdl:output message="tns:VerificaDisponibilidadePesquisaSoapOut"/>
+        </wsdl:operation>
+        <wsdl:operation name="VerificaCessaoParcial">
+            <wsdl:input message="tns:VerificaCessaoParcialSoapIn"/>
+            <wsdl:output message="tns:VerificaCessaoParcialSoapOut"/>
+        </wsdl:operation>
+        <wsdl:operation name="VerificaArrendamentoParcial">
+            <wsdl:input message="tns:VerificaArrendamentoParcialSoapIn"/>
+            <wsdl:output message="tns:VerificaArrendamentoParcialSoapOut"/>
+        </wsdl:operation>
+        <wsdl:operation name="VerificaReducao">
+            <wsdl:input message="tns:VerificaReducaoSoapIn"/>
+            <wsdl:output message="tns:VerificaReducaoSoapOut"/>
+        </wsdl:operation>
+        <wsdl:operation name="VerificaEnglobamento">
+            <wsdl:input message="tns:VerificaEnglobamentoSoapIn"/>
+            <wsdl:output message="tns:VerificaEnglobamentoSoapOut"/>
+        </wsdl:operation>
+        <wsdl:operation name="ValidaPoligonal">
+            <wsdl:input message="tns:ValidaPoligonalSoapIn"/>
+            <wsdl:output message="tns:ValidaPoligonalSoapOut"/>
+        </wsdl:operation>
+        <wsdl:operation name="InserePoligonal">
+            <wsdl:input message="tns:InserePoligonalSoapIn"/>
+            <wsdl:output message="tns:InserePoligonalSoapOut"/>
+        </wsdl:operation>
+        <wsdl:operation name="CorrigePoligonal">
+            <wsdl:input message="tns:CorrigePoligonalSoapIn"/>
+            <wsdl:output message="tns:CorrigePoligonalSoapOut"/>
+        </wsdl:operation>
+        <wsdl:operation name="AtivaPoligonalInativada">
+            <wsdl:input message="tns:AtivaPoligonalInativadaSoapIn"/>
+            <wsdl:output message="tns:AtivaPoligonalInativadaSoapOut"/>
+        </wsdl:operation>
+        <wsdl:operation name="AtivaPoligonalDisponivel">
+            <wsdl:input message="tns:AtivaPoligonalDisponivelSoapIn"/>
+            <wsdl:output message="tns:AtivaPoligonalDisponivelSoapOut"/>
+        </wsdl:operation>
+        <wsdl:operation name="InativaPoligonal">
+            <wsdl:input message="tns:InativaPoligonalSoapIn"/>
+            <wsdl:output message="tns:InativaPoligonalSoapOut"/>
+        </wsdl:operation>
+        <wsdl:operation name="ColocaPoligonalDisponibilidade">
+            <wsdl:input message="tns:ColocaPoligonalDisponibilidadeSoapIn"/>
+            <wsdl:output message="tns:ColocaPoligonalDisponibilidadeSoapOut"/>
+        </wsdl:operation>
+        <wsdl:operation name="TornaAreaLivre">
+            <wsdl:input message="tns:TornaAreaLivreSoapIn"/>
+            <wsdl:output message="tns:TornaAreaLivreSoapOut"/>
+        </wsdl:operation>
+        <wsdl:operation name="ApagarVersao">
+            <wsdl:input message="tns:ApagarVersaoSoapIn"/>
+            <wsdl:output message="tns:ApagarVersaoSoapOut"/>
+        </wsdl:operation>
+        <wsdl:operation name="PostarVersao">
+            <wsdl:input message="tns:PostarVersaoSoapIn"/>
+            <wsdl:output message="tns:PostarVersaoSoapOut"/>
+        </wsdl:operation>
+        <wsdl:operation name="ValidaVerticeBrasil">
+            <wsdl:input message="tns:ValidaVerticeBrasilSoapIn"/>
+            <wsdl:output message="tns:ValidaVerticeBrasilSoapOut"/>
+        </wsdl:operation>
+        <wsdl:operation name="RetornaAreaProcesso">
+            <wsdl:input message="tns:RetornaAreaProcessoSoapIn"/>
+            <wsdl:output message="tns:RetornaAreaProcessoSoapOut"/>
+        </wsdl:operation>
+        <wsdl:operation name="RetornaAreaProcessoPorCamada">
+            <wsdl:input message="tns:RetornaAreaProcessoPorCamadaSoapIn"/>
+            <wsdl:output message="tns:RetornaAreaProcessoPorCamadaSoapOut"/>
+        </wsdl:operation>
+        <wsdl:operation name="SalvarCoordenadas">
+            <wsdl:input message="tns:SalvarCoordenadasSoapIn"/>
+            <wsdl:output message="tns:SalvarCoordenadasSoapOut"/>
+        </wsdl:operation>
+        <wsdl:operation name="SalvarEmpreendimento">
+            <wsdl:input message="tns:SalvarEmpreendimentoSoapIn"/>
+            <wsdl:output message="tns:SalvarEmpreendimentoSoapOut"/>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="MapaSoap" type="tns:MapaSoap">
+        <soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="Versao">
+            <soap:operation soapAction="br.gov.dnpm.wssigareas/Versao" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="AbrirConexao">
+            <soap:operation soapAction="br.gov.dnpm.wssigareas/AbrirConexao" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="RetornaImagemPoligonal">
+            <soap:operation soapAction="br.gov.dnpm.wssigareas/RetornaImagemPoligonal" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="RetornaCamadasPoligonal">
+            <soap:operation soapAction="br.gov.dnpm.wssigareas/RetornaCamadasPoligonal" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="RetornaDescricaoPoligonal">
+            <soap:operation soapAction="br.gov.dnpm.wssigareas/RetornaDescricaoPoligonal" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="RetornaImagemPoligonais">
+            <soap:operation soapAction="br.gov.dnpm.wssigareas/RetornaImagemPoligonais" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="RetornaAtributosPoligonal">
+            <soap:operation soapAction="br.gov.dnpm.wssigareas/RetornaAtributosPoligonal" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="RetornaListaEstadual">
+            <soap:operation soapAction="br.gov.dnpm.wssigareas/RetornaListaEstadual" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="VerificaDisponibilidadeLavra">
+            <soap:operation soapAction="br.gov.dnpm.wssigareas/VerificaDisponibilidadeLavra" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="VerificaDisponibilidadePesquisa">
+            <soap:operation soapAction="br.gov.dnpm.wssigareas/VerificaDisponibilidadePesquisa" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="VerificaCessaoParcial">
+            <soap:operation soapAction="br.gov.dnpm.wssigareas/VerificaCessaoParcial" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="VerificaArrendamentoParcial">
+            <soap:operation soapAction="br.gov.dnpm.wssigareas/VerificaArrendamentoParcial" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="VerificaReducao">
+            <soap:operation soapAction="br.gov.dnpm.wssigareas/VerificaReducao" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="VerificaEnglobamento">
+            <soap:operation soapAction="br.gov.dnpm.wssigareas/VerificaEnglobamento" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="ValidaPoligonal">
+            <soap:operation soapAction="br.gov.dnpm.wssigareas/ValidaPoligonal" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="InserePoligonal">
+            <soap:operation soapAction="br.gov.dnpm.wssigareas/InserePoligonal" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="CorrigePoligonal">
+            <soap:operation soapAction="br.gov.dnpm.wssigareas/CorrigePoligonal" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="AtivaPoligonalInativada">
+            <soap:operation soapAction="br.gov.dnpm.wssigareas/AtivaPoligonalInativada" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="AtivaPoligonalDisponivel">
+            <soap:operation soapAction="br.gov.dnpm.wssigareas/AtivaPoligonalDisponivel" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="InativaPoligonal">
+            <soap:operation soapAction="br.gov.dnpm.wssigareas/InativaPoligonal" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="ColocaPoligonalDisponibilidade">
+            <soap:operation soapAction="br.gov.dnpm.wssigareas/ColocaPoligonalDisponibilidade" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="TornaAreaLivre">
+            <soap:operation soapAction="br.gov.dnpm.wssigareas/TornaAreaLivre" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="ApagarVersao">
+            <soap:operation soapAction="br.gov.dnpm.wssigareas/ApagarVersao" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="PostarVersao">
+            <soap:operation soapAction="br.gov.dnpm.wssigareas/PostarVersao" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="ValidaVerticeBrasil">
+            <soap:operation soapAction="br.gov.dnpm.wssigareas/ValidaVerticeBrasil" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="RetornaAreaProcesso">
+            <soap:operation soapAction="br.gov.dnpm.wssigareas/RetornaAreaProcesso" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="RetornaAreaProcessoPorCamada">
+            <soap:operation soapAction="br.gov.dnpm.wssigareas/RetornaAreaProcessoPorCamada" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="SalvarCoordenadas">
+            <soap:operation soapAction="br.gov.dnpm.wssigareas/SalvarCoordenadas" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+                <wsdl:operation name="SalvarEmpreendimento">
+            <soap:operation soapAction="br.gov.dnpm.wssigareas/SalvarEmpreendimento" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:binding name="MapaSoap12" type="tns:MapaSoap">
+        <soap12:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="Versao">
+            <soap12:operation soapAction="br.gov.dnpm.wssigareas/Versao" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="AbrirConexao">
+            <soap12:operation soapAction="br.gov.dnpm.wssigareas/AbrirConexao" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="RetornaImagemPoligonal">
+            <soap12:operation soapAction="br.gov.dnpm.wssigareas/RetornaImagemPoligonal" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="RetornaCamadasPoligonal">
+            <soap12:operation soapAction="br.gov.dnpm.wssigareas/RetornaCamadasPoligonal" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="RetornaDescricaoPoligonal">
+            <soap12:operation soapAction="br.gov.dnpm.wssigareas/RetornaDescricaoPoligonal" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="RetornaImagemPoligonais">
+            <soap12:operation soapAction="br.gov.dnpm.wssigareas/RetornaImagemPoligonais" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="RetornaAtributosPoligonal">
+            <soap12:operation soapAction="br.gov.dnpm.wssigareas/RetornaAtributosPoligonal" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="RetornaListaEstadual">
+            <soap12:operation soapAction="br.gov.dnpm.wssigareas/RetornaListaEstadual" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="VerificaDisponibilidadeLavra">
+            <soap12:operation soapAction="br.gov.dnpm.wssigareas/VerificaDisponibilidadeLavra" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="VerificaDisponibilidadePesquisa">
+            <soap12:operation soapAction="br.gov.dnpm.wssigareas/VerificaDisponibilidadePesquisa" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="VerificaCessaoParcial">
+            <soap12:operation soapAction="br.gov.dnpm.wssigareas/VerificaCessaoParcial" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="VerificaArrendamentoParcial">
+            <soap12:operation soapAction="br.gov.dnpm.wssigareas/VerificaArrendamentoParcial" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="VerificaReducao">
+            <soap12:operation soapAction="br.gov.dnpm.wssigareas/VerificaReducao" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="VerificaEnglobamento">
+            <soap12:operation soapAction="br.gov.dnpm.wssigareas/VerificaEnglobamento" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="ValidaPoligonal">
+            <soap12:operation soapAction="br.gov.dnpm.wssigareas/ValidaPoligonal" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="InserePoligonal">
+            <soap12:operation soapAction="br.gov.dnpm.wssigareas/InserePoligonal" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="CorrigePoligonal">
+            <soap12:operation soapAction="br.gov.dnpm.wssigareas/CorrigePoligonal" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="AtivaPoligonalInativada">
+            <soap12:operation soapAction="br.gov.dnpm.wssigareas/AtivaPoligonalInativada" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="AtivaPoligonalDisponivel">
+            <soap12:operation soapAction="br.gov.dnpm.wssigareas/AtivaPoligonalDisponivel" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="InativaPoligonal">
+            <soap12:operation soapAction="br.gov.dnpm.wssigareas/InativaPoligonal" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="ColocaPoligonalDisponibilidade">
+            <soap12:operation soapAction="br.gov.dnpm.wssigareas/ColocaPoligonalDisponibilidade" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="TornaAreaLivre">
+            <soap12:operation soapAction="br.gov.dnpm.wssigareas/TornaAreaLivre" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="ApagarVersao">
+            <soap12:operation soapAction="br.gov.dnpm.wssigareas/ApagarVersao" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="PostarVersao">
+            <soap12:operation soapAction="br.gov.dnpm.wssigareas/PostarVersao" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="ValidaVerticeBrasil">
+            <soap12:operation soapAction="br.gov.dnpm.wssigareas/ValidaVerticeBrasil" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="RetornaAreaProcesso">
+            <soap12:operation soapAction="br.gov.dnpm.wssigareas/RetornaAreaProcesso" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="RetornaAreaProcessoPorCamada">
+            <soap12:operation soapAction="br.gov.dnpm.wssigareas/RetornaAreaProcessoPorCamada" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="SalvarCoordenadas">
+            <soap12:operation soapAction="br.gov.dnpm.wssigareas/SalvarCoordenadas" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+                <wsdl:operation name="SalvarEmpreendimento">
+            <soap12:operation soapAction="br.gov.dnpm.wssigareas/SalvarEmpreendimento" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:service name="Mapa">
+        <wsdl:port name="MapaSoap" binding="tns:MapaSoap">
+            <soap:address location="http://wssigareas.dnpm.gov.br/Mapa.asmx"/>
+        </wsdl:port>
+        <wsdl:port name="MapaSoap12" binding="tns:MapaSoap12">
+            <soap12:address location="http://wssigareas.dnpm.gov.br/Mapa.asmx"/>
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>
